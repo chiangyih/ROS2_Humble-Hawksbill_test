@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  # micro-ROS Agent - 連接 ESP32 與 Raspberry Pi
+  micro_ros_agent:
+    image: microros/micro-ros-agent:humble
+    container_name: micro_ros_agent
+    network_mode: bridge
+    ports:
+      - "8888:8888/udp"
+    environment:
+      - ROS_DOMAIN_ID=0
+      - ROS_LOCALHOST_ONLY=0
+      - MICRO_ROS_AGENT_LOG_LEVEL=info
+    command: >
+      udp4 --port 8888 -v6
+    restart: on-failure:5
+    stdin_open: true
+    tty: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ROS 2 Core - DDS & Master
+  ros2_core:
+    image: ros:humble-ros-core
+    container_name: ros2_core
+    network_mode: bridge
+    environment:
+      - ROS_DOMAIN_ID=0
+    command: /bin/bash -c "source /opt/ros/humble/setup.bash && echo 'ROS 2 Core Started' && sleep infinity"
+    restart: on-failure:3
+    stdin_open: true
+    tty: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  default:
+    driver: bridge

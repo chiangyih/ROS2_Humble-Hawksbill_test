@@ -1,0 +1,49 @@
+# ROS 2 Build Artifacts
+build/
+install/
+*.egg-info/
+__pycache__/
+*.pyc
+
+# Workspace
+.colcon/
+log/
+
+# IDE & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Dependencies
+.ros/
+.cache/
+
+# Temporary Files
+*.tmp
+*.bak
+*.log
+
+# Python
+venv/
+env/
+*.pyo
+.pytest_cache/
+
+# Compiled
+*.o
+*.a
+*.so
+
+# Node/npm
+node_modules/
+package-lock.json
+yarn.lock
+
+# Docker
+.dockerignore
+
+# Git Merge/Rebase
+*.orig
